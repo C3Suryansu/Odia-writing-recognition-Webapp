@@ -7,7 +7,7 @@
 </head>
 
 <body>
-		<h1>Digit Recognition using Convolutional Neural Networks</h1>
+		<h1>Odia Lingo classification using Convolutional Neural Networks</h1>
 
 
 		<div class="centered">
@@ -16,7 +16,13 @@
 		</div>
 
 		<div class="centered">
-			<input type="button" class="myButton" value="Predict" style="">
+			<input type="button" class="myButton_num" value="Predict Number" style="">
+			<input type="button" class="myButton_char" value="Predict Character" style="">
+			
+		</div>
+
+		<br>
+		<div class = "centered">
 			<input type="button" id="clearButton" value="Clear" style="">
 		</div>
 
@@ -28,14 +34,14 @@
   		<script src="{{url_for('static',filename='jquery-3.2.0.min.js')}}"></script>
 	    <script src="{{url_for('static',filename='index.js')}}"></script>
 	    <script type="text/javascript">
-	   		$(".myButton").click(function(){
+	   		$(".myButton_num").click(function(){
 	   			$('#result').text('  Predicting...');
 	   			var $SCRIPT_ROOT = {{request.script_root|tojson|safe}};
 	   			var canvasObj = document.getElementById("canvas");
 	   			var img = canvasObj.toDataURL('image/png');
 	   			$.ajax({
 	   				type: "POST",
-	   				url: $SCRIPT_ROOT + "/predict/",
+	   				url: $SCRIPT_ROOT + "/predict_num/",
 	   				data: img,
 	   				success: function(data){
 	   					$('#result').text('Predicted Output: ' + data);
@@ -43,5 +49,25 @@
 	   			});
 	   		});
 	   </script>
+
+		<script src="{{url_for('static',filename='jquery-3.2.0.min.js')}}"></script>
+		<script src="{{url_for('static',filename='index.js')}}"></script>
+		<script type="text/javascript">
+	   		$(".myButton_char").click(function(){
+		   		$('#result').text('  Predicting...');
+		   		var $SCRIPT_ROOT = {{request.script_root|tojson|safe}};
+		   		var canvasObj = document.getElementById("canvas");
+		   		var img = canvasObj.toDataURL('image/png');
+		   		$.ajax({
+			   		type: "POST",
+			   		url: $SCRIPT_ROOT + "/predict_char/",
+			   		data: img,
+			   		success: function(data){
+				   		$('#result').text('Predicted Output: ' + data);
+			   		}
+		   		});
+	   		});
+		</script>
+
 </body>
 </html>
